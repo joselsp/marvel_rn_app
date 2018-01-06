@@ -8,6 +8,13 @@ function updateHeroesList(value) {
     }
 }
 
+export function updateHeroeSelected(value) {
+    return {
+        type: types.HEROES_UPDATE_HEROE,
+        value
+    }
+}
+
 export function fetchHeroesList() {
     return (dispatch, getState) => {
 
@@ -20,8 +27,6 @@ export function fetchHeroesList() {
             dispatch(updateHeroesList(listaHeroes))
         }).catch((error) => {
             console.log("fetchCharacters error: ", error)
-        });
-
-        
+        });        
     }
 }

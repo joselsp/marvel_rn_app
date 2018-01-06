@@ -4,18 +4,18 @@ import { View, TouchableOpacity, Image, StyleSheet, Dimensions } from 'react-nat
 export default  class HeroesCell extends Component {
 
     static defaultProps = {
-        item:   {}
+        onSelect    : () => {},
+        item        :   {}
     }
 
     render() {
         
-        const { item } = this.props
-        console.log("HeroesCell render", item)
+        const { item, onSelect } = this.props
         const secureImageUrl = item.thumbnail.path.replace("http", "https")
         const imageSrc = secureImageUrl + '.' + item.thumbnail.extension
 
         return (
-            <TouchableOpacity style={styles.container}>
+            <TouchableOpacity style={styles.container} onPress={ () => onSelect(item) }>
                 <Image source={{ uri: imageSrc }} style={styles.image} resizeMode={'cover'}/> 
             </TouchableOpacity>
         )

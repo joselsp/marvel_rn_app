@@ -23,12 +23,15 @@ class HeroesList extends Component {
         this.props.fetchHeroesList()        
     }
 
-    renderItem(item, idex) {
+    onSelect(heroe) {
+        this.props.updateSelected(heroe)
+    }
 
-        console.log("renderItem this.state.list", this.props.list)
+    renderItem(item, idex) {
 
         return <HeroesCell 
                     item={item}
+                    onSelect={ (v) => this.onSelect(v) }
                 />
     }
 
@@ -49,7 +52,8 @@ class HeroesList extends Component {
 const mapStateToProps = (state) => {
     console.log("mapStateToProps", state.heroes.list)
     return {
-        list: state.heroes.list
+        list: state.heroes.list,
+        item: state.heroes.item
     }
 }
 
@@ -57,6 +61,10 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         fetchHeroesList: () => {
             dispatch(HeroesActions.fetchHeroesList())
+        },
+
+        updateSelected: (heroe) => {
+            dispatch(HeroesActions.updateHeroeSelected(heroe))
         }
     }
 }

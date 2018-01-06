@@ -15,6 +15,13 @@ export default function reducer(state = initialState, action = {}) {
                 list: action.value
             }
 
+        case types.HEROES_UPDATE_HEROE:
+            console.log("reducer ", action.value)
+            return {
+                ...state,
+                item: action.value
+            }
+
         default:
             return state
     }
