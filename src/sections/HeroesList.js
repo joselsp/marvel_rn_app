@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
 import axios from 'axios'
 import { fetchCharacters } from 'marvel_rn_app/src/webservices/webservices';
 
@@ -27,6 +27,15 @@ class HeroesList extends Component {
         this.props.updateSelected(heroe)
     }
 
+    renderFooter() {
+        return <ActivityIndicator
+                    animating={ this.props.isFetching }
+                    size="large"
+                    color="grey"
+                    style={{ marginVertical: 20 }}
+                />
+    }
+
     renderItem(item, idex) {
 
         return <HeroesCell 
@@ -40,6 +49,7 @@ class HeroesList extends Component {
             <View style={styles.container}>
                 <FlatList 
                     data={ this.props.list }
+                    ListFooterComponent= { () => this.renderFooter() }
                     renderItem={ ({ item }) => this.renderItem(item) }
                     keyExtractor={ ( item ) => item.id }
                     extraData={ this.props }
@@ -53,7 +63,8 @@ const mapStateToProps = (state) => {
     console.log("mapStateToProps", state.heroes.list)
     return {
         list: state.heroes.list,
-        item: state.heroes.item
+        item: state.heroes.item,
+        isFetching: state.heroes.isFetching
     }
 }
 
