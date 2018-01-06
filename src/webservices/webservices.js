@@ -7,12 +7,17 @@ export function configureAxios() {
     axios.defaults.headers.common['Referer'] = constants.REFERER;
 }
 
-export function fetchCharacters() {
-    const url = '/characters?apikey=' + constants.PUBLIC_APYKEY
-    
-    axios.get(url).then((response) => {
-        console.log("fetchCharacters response: ", response)
-    }).catch((error) => {
-        console.log("fetchCharacters error: ", error)
-    });
+export function fetchCharacters(url) {
+    return new Promise(function(resolve, reject) {
+        axios.get(url).then( response => {
+
+            if(response.data)
+                resolve( response.data )
+            else 
+                reject( response )
+
+        }).catch( error => {
+            reject( error )
+        });    
+    })
 }
