@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import axios from 'axios'
-import { fetchCharacters } from '../webservices/webservices';
+import { fetchCharacters } from 'marvel_rn_app/src/webservices/webservices';
+
+import HeroesCell from './HeroesCell'
 
 export default class HeroesList extends Component {
 
@@ -27,6 +29,12 @@ export default class HeroesList extends Component {
         });
     }
 
+    renderItem(item, idex) {
+        return <HeroesCell 
+                    item={item}
+                />
+    }
+
     render() {
         return (
             <View>
@@ -34,7 +42,7 @@ export default class HeroesList extends Component {
 
                 <FlatList 
                     data={ this.state.list }
-                    renderItem={ ({ item }) => <Text>{ item.name }</Text> }
+                    renderItem={ ({ item }) => this.renderItem(item) }
                     keyExtractor={ ( item ) => item.id }
                     extraData={ this.state }
                 />
