@@ -8,8 +8,9 @@ export default  class HeroesCell extends Component {
     }
 
     render() {
-
+        
         const { item } = this.props
+        console.log("HeroesCell render", item)
         const secureImageUrl = item.thumbnail.path.replace("http", "https")
         const imageSrc = secureImageUrl + '.' + item.thumbnail.extension
 

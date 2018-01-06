@@ -5,7 +5,11 @@ import { fetchCharacters } from 'marvel_rn_app/src/webservices/webservices';
 
 import HeroesCell from './HeroesCell'
 
-export default class HeroesList extends Component {
+// Redux
+import { connect } from 'react-redux'
+import * as HeroesActions from 'marvel_rn_app/src/redux/actions/heroes'
+
+class HeroesList extends Component {
 
     constructor(props) {
         super(props)
@@ -14,20 +18,15 @@ export default class HeroesList extends Component {
         }
     }
 
-    componentWillMount() {
-   
-        fetchCharacters('/characters')
-        .then((response) => {
-            const listaHeroes = response.data && response.data.results 
-                                ? response.data.results 
-                                : [] 
-            this.setState({ list: listaHeroes })
-        }).catch((error) => {
-            console.log("fetchCharacters error: ", error)
-        });
+    componentWillMount() {   
+        
+        this.props.fetchHeroesList()        
     }
 
     renderItem(item, idex) {
+
+        console.log("renderItem this.state.list", this.props.list)
+
         return <HeroesCell 
                     item={item}
                 />
@@ -37,15 +36,32 @@ export default class HeroesList extends Component {
         return (
             <View style={styles.container}>
                 <FlatList 
-                    data={ this.state.list }
+                    data={ this.props.list }
                     renderItem={ ({ item }) => this.renderItem(item) }
                     keyExtractor={ ( item ) => item.id }
-                    extraData={ this.state }
+                    extraData={ this.props }
                 />
             </View>
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    console.log("mapStateToProps", state.heroes.list)
+    return {
+        list: state.heroes.list
+    }
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        fetchHeroesList: () => {
+            dispatch(HeroesActions.fetchHeroesList())
+        }
+    }
+}
+
+export default connect (mapStateToProps, mapDispatchToProps) (HeroesList) 
 
 const styles = StyleSheet.create({
 
