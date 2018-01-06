@@ -27,6 +27,7 @@ export default class App extends Component {
           <Scene 
             key={ 'HeroesList' }
             component={ HeroesList }  
+            hideNavBar
           />
         </Scene>
       </Router>

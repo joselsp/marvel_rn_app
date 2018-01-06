@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
 import axios from 'axios'
 import { fetchCharacters } from 'marvel_rn_app/src/webservices/webservices';
 
@@ -15,10 +15,8 @@ export default class HeroesList extends Component {
     }
 
     componentWillMount() {
-
-        const url = '/characters?apikey=' + '30e3aa9376e13919908b2a5bc72df28a'
-    
-        fetchCharacters(url)
+   
+        fetchCharacters('/characters')
         .then((response) => {
             const listaHeroes = response.data && response.data.results 
                                 ? response.data.results 
@@ -37,9 +35,7 @@ export default class HeroesList extends Component {
 
     render() {
         return (
-            <View>
-                <Text> Listado de Heroes </Text>
-
+            <View style={styles.container}>
                 <FlatList 
                     data={ this.state.list }
                     renderItem={ ({ item }) => this.renderItem(item) }
@@ -50,3 +46,10 @@ export default class HeroesList extends Component {
         )
     }
 }
+
+const styles = StyleSheet.create({
+
+    container: {
+        paddingTop: 25,
+    }
+})
