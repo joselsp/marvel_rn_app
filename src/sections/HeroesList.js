@@ -30,12 +30,14 @@ class HeroesList extends Component {
     }
 
     renderFooter() {
-        return <ActivityIndicator
-                    animating={ this.props.isFetching }
-                    size="large"
-                    color="grey"
-                    style={{ marginVertical: 20 }}
-                />
+
+        const Spinner = require('react-native-spinkit');
+
+        return ( 
+            <View style={styles.spinner}>
+                <Spinner isVisible={this.props.isFetching} size={40} type={'ChasingDots'} color={'white'}/>
+            </View>
+        )
     }
 
     renderItem(item, idex) {
@@ -88,5 +90,10 @@ const styles = StyleSheet.create({
 
     container: {
         paddingTop: 25,
-    }
+    },
+
+    spinner: {
+        marginBottom: 50,
+        alignItems: 'center',
+      },
 })

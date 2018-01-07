@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, TextInput } from 'react-native';
+import { View, StyleSheet, Image, TextInput, ListView } from 'react-native';
 
 //Redux
 import { connect } from  'react-redux'
@@ -8,7 +8,7 @@ class HeroeDetail extends Component {
 
     render(){
         const { heroe } = this.props
-        console.log("HeroeDetail render", heroe)
+        console.log("HeroeDetail render heroe", heroe)
         const nombre = heroe ? heroe.name : ''
         const description = heroe && heroe.description != "" ? heroe.description : 'Description not available'
         const secureImageUrl = heroe.thumbnail.path.replace("http", "https")
