@@ -8,7 +8,6 @@ class HeroeDetail extends Component {
 
     render(){
         const { heroe } = this.props
-        console.log("HeroeDetail render heroe", heroe)
         const nombre = heroe ? heroe.name : ''
         const description = heroe && heroe.description != "" ? heroe.description : 'Description not available'
         const secureImageUrl = heroe.thumbnail.path.replace("http", "https")

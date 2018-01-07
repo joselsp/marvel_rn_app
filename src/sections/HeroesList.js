@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, FlatList, StyleSheet, RefreshControl, ActivityIndicator, ListView } from 'react-native';
 import axios from 'axios'
 import { fetchCharacters } from 'marvel_rn_app/src/webservices/webservices';
 import Spinner from 'react-native-spinkit'
@@ -16,14 +16,13 @@ class HeroesList extends Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-            list: []
-        }
+        this.renderRow = this.renderRow.bind(this)
+        this.onEndReached = this.onEndReached.bind(this)
     }
 
     componentWillMount() {   
         
-        this.props.fetchHeroesList()        
+        this.props.initHeroesList()        
     }
 
     onSelect(heroe) {
@@ -39,23 +38,39 @@ class HeroesList extends Component {
         )
     }
 
-    renderItem(item, idex) {
+    onEndReached() {
 
-        return <HeroesCell 
-                    item={item}
-                    onSelect={ (v) => this.onSelect(v) }
-                />
+        if(this.props.list.length < this.props.total && !this.props.isFetching) {
+            let newOffset = this.props.offset + 10
+            this.props.fetchHeroesList(newOffset)
+        }        
+    }
+
+    renderRow(rowData) {
+        return <HeroesCell item={rowData} onSelect={ (heroe) => this.onSelect(heroe) } key={rowData.id} />
     }
 
     render() {
+
+        const list = this.props.list
+        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+        const datasource = ds.cloneWithRows(list)
+
         return (
             <View style={styles.container}>
-                <FlatList 
-                    data={ this.props.list }
-                    ListFooterComponent= { () => this.renderFooter() }
-                    renderItem={ ({ item }) => this.renderItem(item) }
-                    keyExtractor={ ( item ) => item.id }
-                    extraData={ this.props }
+                <ListView 
+                    dataSource              = { datasource }
+                    renderRow               = { this.renderRow }
+                    onEndReached            = { this.onEndReached }
+                    enableEmptySections     = { true }
+                    refreshControl          = {
+                                                <RefreshControl
+                                                    refreshing  = { this.props.isFetching }
+                                                    onRefresh   = { () => this.props.initHeroesList() }
+                                                    colors      = { ['white'] }
+                                                    tintColor   = { 'white' }
+                                                />
+                                            }
                 />
             </View>
         )
@@ -65,6 +80,8 @@ class HeroesList extends Component {
 const mapStateToProps = (state) => {
     return {
         list: state.heroes.list,
+        total: state.heroes.total,
+        offset: state.heroes.offset,
         item: state.heroes.item,
         isFetching: state.heroes.isFetching
     }
@@ -72,7 +89,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        fetchHeroesList: () => {
+
+        initHeroesList: () => {
+            dispatch(HeroesActions.initHeroesList())
+        },
+
+        fetchHeroesList: (offset) => {
+            dispatch(HeroesActions.updateHeroesListOffset(offset))
             dispatch(HeroesActions.fetchHeroesList())
         },
 

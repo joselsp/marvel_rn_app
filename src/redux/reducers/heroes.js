@@ -3,6 +3,8 @@ import * as types from '../types/heroes'
 const initialState = {
     isFetching: false,
     list: [],
+    total: 0,
+    offset: 0,
     item: null,
 }
 
@@ -12,7 +14,14 @@ export default function reducer(state = initialState, action = {}) {
         case types.HEROES_UPDATE_LIST:
             return {
                 ...state,
-                list: action.value
+                list: action.value,
+                total: action.total
+            }
+        
+        case types.HEROES_UPDATE_LIST_OFFSET:
+            return {
+                ...state,
+                offset: action.value
             }
 
         case types.HEROES_UPDATE_HEROE:

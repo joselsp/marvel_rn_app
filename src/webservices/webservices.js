@@ -8,7 +8,7 @@ export function configureAxios() {
 }
 
 export function fetchCharacters(url) {
-    const urlPublicKey = url + '?apikey=' + constants.PUBLIC_APYKEY
+    const urlPublicKey = url + '&apikey=' + constants.PUBLIC_APYKEY
     return new Promise(function(resolve, reject) {
         axios.get(urlPublicKey).then( response => {
 
