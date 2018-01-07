@@ -15,3 +15,7 @@ Crear una aplicación con los siguientes requisitos:
 https://github.com/maxs15/react-native-spinkit
 
 - [ ] Un formulario de añadir personaje (aunque no esté conectado contra un webservice) ***(Parcialmente implementado)***
+
+## **Funcionalidad Extra**
+
+- [x] Paginación de la lista de heroes en rama `Pagination`
