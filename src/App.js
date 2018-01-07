@@ -5,14 +5,15 @@
  */
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Actions, Scene, Router } from 'react-native-router-flux'
 
 import * as webservices from 'marvel_rn_app/src/webservices/webservices'
 
 /****************** COMPONENTS *******************/
-import HeroesList from 'marvel_rn_app/src/sections/HeroesList';
+import HeroesList from 'marvel_rn_app/src/sections/HeroesList'
 import HeroeDetail from 'marvel_rn_app/src/sections/HeroeDetail'
+import HeroeNew from 'marvel_rn_app/src/sections/HeroeNew'
 /************************************************/
 
 /******************* REDUX **********************/
@@ -33,6 +34,14 @@ export default class App extends Component {
   componentWillMount() {
     webservices.configureAxios()
   }
+
+  renderAddCharacterButton() {
+    return (
+        <TouchableOpacity style={styles.addButton} onPress={ () => Actions.HeroeNew() } >
+            <Text style={styles.addButtonText}>{ 'Añadir' }</Text>
+        </TouchableOpacity>
+    )
+  }
   
   render() {
     return (
@@ -42,12 +51,20 @@ export default class App extends Component {
             <Scene 
               key={ 'HeroesList' }
               component={ HeroesList }  
-              hideNavBar
+              renderRightButton={ () => this.renderAddCharacterButton() }
+              title={ 'Marvel Heroes' }
             />
 
             <Scene key={ 'HeroeDetail' }
               component= { HeroeDetail }
             />
+
+            <Scene
+              key={ 'HeroeNew' }
+              component={ HeroeNew }
+              title={ 'Añadir' }
+            />
+
           </Scene>
         </Router>
       </Provider>
@@ -61,5 +78,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+  },
+
+  addButtonText: {
+    color: 'blue',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+
+  addButton: {
+      padding: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
   }
 });

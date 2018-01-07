@@ -1,5 +1,6 @@
 import * as types from '../types/heroes'
 import { fetchCharacters } from 'marvel_rn_app/src/webservices/webservices'
+import { Actions } from 'react-native-router-flux'
 
 function updateHeroesList(value) {
     return {
@@ -22,6 +23,13 @@ function setHeroesFetching(value){
     }
 }
 
+function postHeroeWithoutWS(value) {
+    return {
+        type: types.HEROES_POST_HEROE,
+        value
+    }
+}
+
 export function fetchHeroesList() {
     return (dispatch, getState) => {
 
@@ -38,5 +46,16 @@ export function fetchHeroesList() {
             dispatch(setHeroesFetching(false))
             console.log("fetchCharacters error: ", error)
         });        
+    }
+}
+
+export function postHeroe(data) {
+    return (dispatch, getState) => {
+    
+        const state = getState()
+        console.log("postHeroe", state)
+        dispatch(postHeroeWithoutWS(data))
+
+        Actions.pop()
     }
 }

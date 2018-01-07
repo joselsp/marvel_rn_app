@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
 import axios from 'axios'
 import { fetchCharacters } from 'marvel_rn_app/src/webservices/webservices';
+import Spinner from 'react-native-spinkit'
 
 import HeroesCell from './HeroesCell'
 import { Actions } from 'react-native-router-flux';
@@ -30,8 +31,6 @@ class HeroesList extends Component {
     }
 
     renderFooter() {
-
-        const Spinner = require('react-native-spinkit');
 
         return ( 
             <View style={styles.spinner}>
@@ -89,7 +88,7 @@ export default connect (mapStateToProps, mapDispatchToProps) (HeroesList)
 const styles = StyleSheet.create({
 
     container: {
-        paddingTop: 25,
+        flex: 1,
     },
 
     spinner: {
