@@ -14,4 +14,4 @@ Crear una aplicación con los siguientes requisitos:
 - [x] El uso de este spinner en los tiempos de carga, que tendremos que enlazar MANUALMENTE con nuestros proyectos nativos.
 https://github.com/maxs15/react-native-spinkit
 
-- [ ] Un formulario de añadir personaje (aunque no esté conectado contra un webservice) ****(Parcialmente implementado)****
+- [ ] Un formulario de añadir personaje (aunque no esté conectado contra un webservice) ***(Parcialmente implementado)***
