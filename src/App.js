@@ -12,6 +12,7 @@ import * as webservices from 'marvel_rn_app/src/webservices/webservices'
 
 /****************** COMPONENTS *******************/
 import HeroesList from 'marvel_rn_app/src/sections/HeroesList';
+import HeroeDetail from 'marvel_rn_app/src/sections/HeroeDetail'
 /************************************************/
 
 /******************* REDUX **********************/
@@ -42,6 +43,10 @@ export default class App extends Component {
               key={ 'HeroesList' }
               component={ HeroesList }  
               hideNavBar
+            />
+
+            <Scene key={ 'HeroeDetail' }
+              component= { HeroeDetail }
             />
           </Scene>
         </Router>

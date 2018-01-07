@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Image, StyleSheet, Dimensions } from 'react-native';
 
-export default  class HeroesCell extends Component {
+export default class HeroesCell extends Component {
 
     static defaultProps = {
         onSelect    : () => {},

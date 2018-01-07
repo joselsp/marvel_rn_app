@@ -4,10 +4,12 @@ import axios from 'axios'
 import { fetchCharacters } from 'marvel_rn_app/src/webservices/webservices';
 
 import HeroesCell from './HeroesCell'
+import { Actions } from 'react-native-router-flux';
 
 // Redux
 import { connect } from 'react-redux'
 import * as HeroesActions from 'marvel_rn_app/src/redux/actions/heroes'
+
 
 class HeroesList extends Component {
 
@@ -60,7 +62,6 @@ class HeroesList extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log("mapStateToProps", state.heroes.list)
     return {
         list: state.heroes.list,
         item: state.heroes.item,
@@ -76,6 +77,7 @@ const mapDispatchToProps = (dispatch, props) => {
 
         updateSelected: (heroe) => {
             dispatch(HeroesActions.updateHeroeSelected(heroe))
+            Actions.HeroeDetail( {title: heroe.name } )
         }
     }
 }
